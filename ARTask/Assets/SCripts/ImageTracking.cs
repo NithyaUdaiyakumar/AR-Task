@@ -12,6 +12,8 @@ public class ImageTracking : MonoBehaviour
     private ARTrackedImageManager arTrackedImageManager;
     private GameObject planeInstance;
 
+    
+
     void Start()
     {
         arTrackedImageManager = FindObjectOfType<ARTrackedImageManager>();
@@ -22,11 +24,12 @@ public class ImageTracking : MonoBehaviour
     {
         foreach (var addedImage in eventArgs.added)
         {
-            if (addedImage.referenceImage.name == "FAN") // Ensure it matches your target image
+            if (addedImage.referenceImage.name == "MAIN") // Ensure it matches your target image
             {
                 // Instantiate the plane immediately at the image's position
                 Vector3 planePosition = addedImage.transform.position;
                 planeInstance = Instantiate(planePrefab, planePosition, Quaternion.identity);
+                
 
                 // Start the Coroutine to spawn two models after a delay
                 StartCoroutine(SpawnTwoModelsAfterDelay(2f, planePosition));
