@@ -1,19 +1,43 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.Management;
 
 public class TapToLoadScene : MonoBehaviour
 {
-    public string nextSceneName; // Name of the scene to load
-    
+    public string nextSceneName; // Assign the scene name in the Inspector
 
-    private void OnMouseDown()
+    public void OnMouseDown()
     {
-        // Check if the object is clicked
-        Debug.Log($"{gameObject.name} clicked!");
+        TransitionToNextScene();
+    }
 
-        // Load the next scene
-        
-        SceneManager.LoadScene(nextSceneName);
+    private void TransitionToNextScene()
+    {
+        var xrManagerSettings = XRGeneralSettings.Instance.Manager;
+
+        if (xrManagerSettings != null)
+        {
+            // Deinitialize XR loader
+            xrManagerSettings.DeinitializeLoader();
+
+            // Load the new scene
+            SceneManager.LoadScene(nextSceneName);
+
+            // Reinitialize XR loader in the new scene
+            xrManagerSettings.InitializeLoaderSync();
+
+            if (xrManagerSettings.activeLoader != null)
+            {
+                xrManagerSettings.StartSubsystems();
+            }
+            else
+            {
+                Debug.LogError("Failed to initialize XR Loader in the new scene.");
+            }
+        }
+        else
+        {
+            Debug.LogError("XRGeneralSettings.Instance.Manager is null.");
+        }
     }
 }

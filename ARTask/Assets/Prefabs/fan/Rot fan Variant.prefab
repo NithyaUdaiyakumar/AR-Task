@@ -129,6 +129,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2069560154273002300, guid: 0647090eee00d604b968c00f3fa1bfd4,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7219967691968512617, guid: 0647090eee00d604b968c00f3fa1bfd4,
         type: 3}
       propertyPath: m_LocalScale.x
